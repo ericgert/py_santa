@@ -1,6 +1,8 @@
 import yagmail 
 import configparser
 import random
+import sys
+
 
 #grab the creds from the config file
 config = configparser.ConfigParser()
@@ -8,40 +10,77 @@ config.read('../santa.ini')
 mail_user = config['SANTA_MAIL']['user']
 mail_password = config['SANTA_MAIL']['password']
 
-fam_list = [
-    ('Eric',{
-    "email":"eric.gert@gmail.com"
-    ,"exclusions":["Eric","Brette","Troy"]
-    })
-    , ('Brette',{
-        "email":"gertonson.brette@gmail.com"
-        , "exclusions":["Brette","Eric","Christi"]
-    })
-    , ('Steve',{
-        "email":"sfgert@gmail.com"
-        , "exclusions":["Steve","Marti","Eric"]
-    })
-    , ('Marti',{
-        "email":"mpgert1@gmail.com"
-        , "exclusions":["Marti","Steve","Elizabeth Lee"]
-    })
-    , ('Christi',{
-        "email":"wheatonc@dtccom.net"
-        , "exclusions":["Christi","Troy","Steve"]
-    })
-    , ('Troy', {
-        "email":"wheaton@dtccom.net"
-        , "exclusions":["Troy","Christi","Matt"]
-    })
-    , ('Matt', {
-        "email":"gertonson@hotmail.com"
-        , "exclusions":["Matt","Elizabeth Lee","Marti"]
-    })
-    , ('Elizabeth Lee', {
-        "email":"eleetark@gmail.com"
-        , "exclusions":["Elizabeth Lee","Matt", "Brette"]
-    })
-]
+#check if flag is for kids or not
+args = sys.argv
+if len(args) > 1 and args[1] == '--kids':
+    fam_list = [
+        ('Cameron',{
+        "email":"gertonson.c@gmail.com"
+        ,"exclusions":["Cameron","Alex","Micah"]
+        })
+        , ('Alex',{
+            "email":"gertonson.alex@gmail.com"
+            , "exclusions":["Alex","Cameron","Micah"]
+        })
+        , ('Micah',{
+            "email":"gertonson.micah@gmail.com"
+            , "exclusions":["Micah","Cameron","Alex"]
+        })
+        , ('Emma',{
+            "email":""
+            , "exclusions":["Emma","Sarah"]
+        })
+        , ('Sarah',{
+            "email":""
+            , "exclusions":["Sarah","Emma"]
+        })
+        , ('Mary Randolf', {
+            "email":""
+            , "exclusions":["Mary Randolf","Letty"]
+        })
+        , ('Letty', {
+            "email":""
+            , "exclusions":["Letty","Mary Randolf"]
+        })
+    ]
+elif len(args) == 1 or args[1] == '--adults':
+    fam_list = [
+        ('Eric',{
+        "email":"eric.gert@gmail.com"
+        ,"exclusions":["Eric","Brette","Troy"]
+        })
+        , ('Brette',{
+            "email":"gertonson.brette@gmail.com"
+            , "exclusions":["Brette","Eric","Christi"]
+        })
+        , ('Steve',{
+            "email":"sfgert@gmail.com"
+            , "exclusions":["Steve","Marti","Eric"]
+        })
+        , ('Marti',{
+            "email":"mpgert1@gmail.com"
+            , "exclusions":["Marti","Steve","Elizabeth Lee"]
+        })
+        , ('Christi',{
+            "email":"wheatonc@dtccom.net"
+            , "exclusions":["Christi","Troy","Steve"]
+        })
+        , ('Troy', {
+            "email":"wheaton@dtccom.net"
+            , "exclusions":["Troy","Christi","Matt"]
+        })
+        , ('Matt', {
+            "email":"gertonson@hotmail.com"
+            , "exclusions":["Matt","Elizabeth Lee","Marti"]
+        })
+        , ('Elizabeth Lee', {
+            "email":"eleetark@gmail.com"
+            , "exclusions":["Elizabeth Lee","Matt", "Brette"]
+        })
+    ]
+else:
+    raise Exception("improper usage.  Please specify either the --kids or --adults flag or do not pass any arguments.")
+
 
 #create list of just the names left to be drawn (all names initially)
 santas = [i[0] for i in fam_list]
@@ -77,7 +116,7 @@ for _ in range(len(full_name_list)):
     yag = yagmail.SMTP(user=mail_user, password=mail_password)
     yag.send(
         to = email, 
-        subject = 'Secret Santa Assignment',
+        subject = 'Secret Santa Assignment - Cousins',
         contents = message_body)
     
     santas.pop(name_num)

@@ -27,20 +27,20 @@ if len(args) > 1 and args[1] == '--kids':
             , "exclusions":["Micah","Cameron","Alex"]
         })
         , ('Emma',{
-            "email":""
+            "email":"emma.wheaton@dtccom.net"
             , "exclusions":["Emma","Sarah"]
         })
         , ('Sarah',{
-            "email":""
+            "email":"sarah.wheaton@dtccom.net"
             , "exclusions":["Sarah","Emma"]
         })
-        , ('Mary Randolf', {
-            "email":""
-            , "exclusions":["Mary Randolf","Letty"]
+        , ('Mary Randolph', {
+            "email":"gertonson@hotmail.com"
+            , "exclusions":["Mary Randolph","Letty"]
         })
         , ('Letty', {
-            "email":""
-            , "exclusions":["Letty","Mary Randolf"]
+            "email":"gertonson@hotmail.com"
+            , "exclusions":["Letty","Mary Randolph"]
         })
     ]
 elif len(args) == 1 or args[1] == '--adults':
